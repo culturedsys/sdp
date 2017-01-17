@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * An implementation of sensors for fire
  */
-class FireSensor implements Sensor {
+class FireSensor implements BatteryPoweredSensor {
     private final String location;
     private int batteryPercentage;
 

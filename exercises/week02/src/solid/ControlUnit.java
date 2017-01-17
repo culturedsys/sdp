@@ -18,22 +18,20 @@ public class ControlUnit {
     }
 
     /**
-     * Poll sensors every 5 seconds, and report any that are triggered and any that have low battery (three
-     * responsibilities).
+     * Poll sensors every 5 seconds, and report any that are triggered (two responsibilities).
+     *
+     * I've removed the battery status check, because not all sensors have batteries, and so I've moved
+     * getBatteryPercentage() to a separate interface; as such, I can't access it on the Sensor objects passed in
+     * here (I think I could use a downcast and handle any exceptions, or add an isBatteryPowered method to the
+     * Sensor interface and only downcast if that method returns true, but both options seem inelegant. Anyway,
+     * polling and checking battery status are separate responsibilites, to perhaps pollSensors() shouldn't be
+     * handling the latter anyway).
      */
     private void pollSensors() {
         while (true) {
             for (Sensor sensor : sensors) {
                 if (sensor.isTriggered()) {
                     System.out.println("Alert! " + sensor.getSensorType() + " in " + sensor.getLocation() + " triggered");
-                }
-                if (sensor.getBatteryPercentage() < 5) {
-                    System.out.println("Alert! " + sensor.getSensorType() +
-                            " in " + sensor.getLocation() + " battery critical");
-
-                } else if (sensor.getBatteryPercentage() < 15) {
-                    System.out.println("Warning: " + sensor.getSensorType() +
-                            " in " + sensor.getLocation() + " battery low");
                 }
             }
 

@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * A Sensor implementation that detects smoke.
  */
-class SmokeSensor implements Sensor {
+class SmokeSensor implements BatteryPoweredSensor {
     private final String location;
 
     /**
