@@ -1,20 +1,27 @@
 package solid;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * The main entry point for controlling sensors
  */
 public class ControlUnit {
+    private final Collection<Sensor> sensors;
+
     /**
-     * Create some sensors, poll them every 5 seconds, and report any that are triggered (three responsibilities).
+     * Create a control unit monitoring the supplied sensors.
+     */
+    public ControlUnit(Collection<Sensor> sensors) {
+        this.sensors = sensors;
+    }
+
+    /**
+     * Poll sensors every 5 seconds, and report any that are triggered and any that have low battery (three
+     * responsibilities).
      */
     private void pollSensors() {
-        Sensor sensors[] = {
-                new FireSensor("Lobby"),
-                new SmokeSensor("Stairs"),
-                new SmokeSensor("Mezzanine"),
-                new FireSensor("Kitchen")
-        };
-
         while (true) {
             for (Sensor sensor : sensors) {
                 if (sensor.isTriggered()) {
@@ -39,7 +46,14 @@ public class ControlUnit {
     }
 
     public static void main(String[] args) {
-        ControlUnit controlUnit = new ControlUnit();
+        Collection<Sensor> sensors = Stream.of(
+                new FireSensor("Lobby"),
+                new SmokeSensor("Stairs"),
+                new SmokeSensor("Mezzanine"),
+                new FireSensor("Kitchen")
+        ).collect(Collectors.toList());
+
+        ControlUnit controlUnit = new ControlUnit(sensors);
         controlUnit.pollSensors();
     }
 }
