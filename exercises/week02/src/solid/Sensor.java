@@ -23,4 +23,14 @@ public interface Sensor {
      * @return a number between 0-100 where 0 is empty and 100 is fully charged.
      */
     //int getBatteryPercentage();
+
+    enum Type {
+        HAZARD,
+        SECURITY
+    };
+
+    /**
+     * @return a value specifying the type (e.g. security or hazard) of this sensor.
+     */
+    Type getType();
 }

@@ -38,6 +38,11 @@ class FireSensor implements BatteryPoweredSensor {
     }
 
     @Override
+    public Type getType() {
+        return Type.HAZARD;
+    }
+
+    @Override
     public int getBatteryPercentage() {
         return batteryPercentage;
     }

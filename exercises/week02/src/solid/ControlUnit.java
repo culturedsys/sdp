@@ -27,7 +27,7 @@ public class ControlUnit {
      * polling and checking battery status are separate responsibilites, to perhaps pollSensors() shouldn't be
      * handling the latter anyway).
      */
-    private void pollSensors() {
+    public void pollSensors() {
         while (true) {
             for (Sensor sensor : sensors) {
                 if (sensor.isTriggered()) {
