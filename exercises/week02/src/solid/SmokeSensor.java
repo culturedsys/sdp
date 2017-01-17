@@ -1,30 +1,43 @@
 package solid;
 
+import java.util.Random;
+
 /**
- * A Sensor implemetation that detects smoke.
+ * A Sensor implementation that detects smoke.
  */
 class SmokeSensor implements Sensor {
-    public SmokeSensor(String location) {
+    private final String location;
 
+    /**
+     * A random number generator to simulate a change of detecting smoke.
+     */
+    private final Random random;
+    private int batteryPercentage;
+
+    public SmokeSensor(String location) {
+        this.location = location;
+        batteryPercentage = 100;
+        random = new Random();
     }
 
     @Override
     public boolean isTriggered() {
-        return false;
+        batteryPercentage -= 20;
+        return random.nextInt(100) < 10;
     }
 
     @Override
     public String getLocation() {
-        return null;
+        return location;
     }
 
     @Override
     public String getSensorType() {
-        return null;
+        return "Smoke sensor";
     }
 
     @Override
     public int getBatteryPercentage() {
-        return 0;
+        return batteryPercentage;
     }
 }
