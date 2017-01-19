@@ -141,27 +141,25 @@ object Hammurabi {
     }
   }
 
-  def calculatePlagueDeaths(population: Int): Int = {
+  def calculatePlagueDeaths(population: Int): Int =
     if (Random.nextInt(100) < 15) {
       population / 2
     } else {
       0
     }
-  }
 
-  def calculateStarvation(population: Int, bushelsFed: Int): Int = {
+
+  def calculateStarvation(population: Int, bushelsFed: Int): Int =
     population - bushelsFed / 20
-  }
 
-  def calculateImmigrants(acresOwned: Int, bushelsInStorage: Int, population: Int) = {
+
+  def calculateImmigrants(acresOwned: Int, bushelsInStorage: Int, population: Int) =
     (20 * acresOwned + bushelsInStorage) / (100 * population) + 1
-  }
 
-  def calculateBushelsPerAcre(): Int = {
-    Random.nextInt(8) + 1
-  }
 
-  def calculateRatEating(bushelsInStorage: Int): Int = {
+  def calculateBushelsPerAcre(): Int = Random.nextInt(8) + 1
+
+  def calculateRatEating(bushelsInStorage: Int): Int =
     if (Random.nextInt(100) < 40) {
       val ratPortion = Random.nextInt(3) + 1
       (bushelsInStorage.toDouble * (ratPortion / 10.0)).toInt
@@ -169,19 +167,18 @@ object Hammurabi {
       0
     }
 
-  }
 
   def calculatePricePerAcre(): Int = Random.nextInt(7) + 17
 
-  def readInt(message: String): Int = {
+  def readInt(message: String): Int =
     try {
       readLine(message).toInt
     } catch {
-      case _ : Throwable =>
+      case _: Throwable =>
         println("That's not an integer. Please enter an integer")
         readInt(message)
     }
-  }
+
 }
 
 Hammurabi.hammurabi()
