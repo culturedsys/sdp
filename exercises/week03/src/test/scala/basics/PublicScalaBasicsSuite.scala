@@ -15,6 +15,33 @@ class PublicScalaBasicsSuite extends FunSuite {
     }
   }
 
+  test("[1a] The add function should add a positive and a negative number") {
+    for (i <- 1 to 1000) {
+      val a = scala.util.Random.nextInt(1000)
+      val b = -scala.util.Random.nextInt(1000)
+      val r = add(a, b)
+      assert(a + b == r, s"Your add function produced the result $r from adding $a to $b")
+    }
+  }
+
+  test("[1b] The add function should add a negative and a positive number") {
+    for (i <- 1 to 1000) {
+      val a = -scala.util.Random.nextInt(1000)
+      val b = scala.util.Random.nextInt(1000)
+      val r = add(a, b)
+      assert(a + b == r, s"Your add function produced the result $r from adding $a to $b")
+    }
+  }
+
+  test("[1c] The add function should add two negative numbers") {
+    for (i <- 1 to 1000) {
+      val a = -scala.util.Random.nextInt(1000)
+      val b = -scala.util.Random.nextInt(1000)
+      val r = add(a, b)
+      assert(a + b == r, s"Your add function produced the result $r from adding $a to $b")
+    }
+  }
+
   test("[2] The inRange function should return an inclusive range") {
     for (i <- 1 to 1000; j <- 1 to 1000 if j > i) {
       val r = inRange(i, j)
