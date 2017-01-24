@@ -98,7 +98,15 @@ object ScalaBasics {
    * @param r the array of integers
    * @return the minimum integer in the array
    */
-  def minRecursive(r: Array[Int]): Int = ???
+  def minRecursive(r: Array[Int]): Int = {
+    def helper(running: Int, array: Array[Int]): Int =
+      if (array.length == 0)
+        running
+      else
+        helper(if (running < array.head) running else array.head, array.tail)
+
+    helper(r.head, r.tail)
+  }
 
   /**
    * Return the base 36 equivalent of the BitInt b.
@@ -108,7 +116,23 @@ object ScalaBasics {
    * @param b a big integer
    * @return the base 36 equivalent
    */
-  def base36(b: BigInt): String = ???
+  def base36(b: BigInt): String = {
+    // Could just use BigInt's toString method with 36 as the radix parameter, but where's the fun in that?
+    
+    def digitToChar(value: BigInt): Char =
+      if (value < 10)
+        ('0' + value.toChar).toChar
+      else
+        ('a' + (value.toChar - 10)).toChar
+
+    def base36recursive(digits: List[Char], value: BigInt): List[Char] =
+      if (value < 36)
+        digitToChar(value) :: digits
+      else
+        base36recursive(digitToChar(value % 36) :: digits, value / 36)
+
+    base36recursive(List(), b).reverse.mkString
+  }
 
   /**
    * Splits the String s in half.
