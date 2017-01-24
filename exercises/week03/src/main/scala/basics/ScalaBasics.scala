@@ -118,7 +118,7 @@ object ScalaBasics {
    */
   def base36(b: BigInt): String = {
     // Could just use BigInt's toString method with 36 as the radix parameter, but where's the fun in that?
-    
+
     def digitToChar(value: BigInt): Char =
       if (value < 10)
         ('0' + value.toChar).toChar
@@ -155,7 +155,7 @@ object ScalaBasics {
    * @param s the string to split
    * @return the split string as a tuple
    */
-  def splitInHalf(s: String): (String, String) = ???
+  def splitInHalf(s: String): (String, String) = s.splitAt(s.length / 2)
 
   /**
    * Determines if the given string s is a palindrome.
@@ -178,7 +178,13 @@ object ScalaBasics {
    * @param s the potential palindrome
    * @return true if s is a palindrome; false otherwise
    */
-  def isPalindrome(s: String): Boolean = ???
+  def isPalindrome(s: String): Boolean = {
+    // True if one of the specific punctuation characters mentioned in the documentation
+    def isPunctuationOrSpace(c: Char) = c == '.' || c == '?' || c == ',' || c == ';' || c == '!' || c == '-' || c == '\'' || c == ' '
+
+    val normalized = for (c <- s if !isPunctuationOrSpace(c)) yield c.toLower
+    normalized == normalized.reverse
+  }
 
   /**
    * You don't have to complete this one as we've removed it from the list 
