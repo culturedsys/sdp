@@ -79,13 +79,27 @@ class PublicScalaBasicsSuite extends FunSuite {
     }
   }
 
-  test("[3a] The oddRange function for 0 should return an empty range") {
+  test("[3a] The oddRange function should be exclusive") {
+    for (n <- 1 to 1000) {
+      val r = oddRange(n)
+      assert(!r.isInclusive, "Your range is not exclusive")
+    }
+  }
+
+  test("[3b] The oddRange function should produce a range containing n integers") {
+    for (n <- 1 to 1000) {
+      val r = oddRange(n)
+      assert(r.length == n, s"Your range does not contain $n elements")
+    }
+  }
+
+  test("[3c] The oddRange function for 0 should return an empty range") {
     val r = oddRange(0)
     assert(r.isEmpty, "Your range is not empty")
   }
 
   // This is not specified in the documentation, but seems like a reasonable implementation
-  test("[3b] The oddRange function for a negative number should return an empty range") {
+  test("[3d] The oddRange function for a negative number should return an empty range") {
     for (i <- -1000 to -1) {
       val r = oddRange(i)
       assert(r.isEmpty, "Your range is not empty")
