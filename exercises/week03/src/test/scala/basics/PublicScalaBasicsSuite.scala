@@ -198,4 +198,19 @@ class PublicScalaBasicsSuite extends FunSuite {
   //   assert(sumChars("the true sign of intelligence is not ...".toCharArray: _*) == 3601, "this should sum to 3601")
   // }
 
+  test("[10] wordCounter counts the number of words") {
+    val expected = Map("this" -> 2, "is" -> 2, "a" -> 2, "sentence" -> 2, "too" -> 1)
+    val actual = wordCounter(Array("this is a sentence", "this is a sentence too"))
+    assert(expected == actual, s"$actual should be $expected")
+  }
+
+  test("[10a] wordCounter for an empty array returns an empty map") {
+    val actual = wordCounter(Array())
+    assert(actual == Map(), s"$actual should be empty")
+  }
+
+  test("[10b] wordCounter for an array of empty strings returns an empty map") {
+    val actual = wordCounter(Array("", ""))
+    assert(actual == Map(), s"$actual should be empty")
+  }
 }
