@@ -15,7 +15,7 @@ object ScalaBasics {
    * @param b operand b
    * @return the sum
    */
-  def add(a: Int, b: Int): Int = ???
+  def add(a: Int, b: Int): Int = a + b
 
   /**
    * Write a function that returns the inclusive Range from start to end.
