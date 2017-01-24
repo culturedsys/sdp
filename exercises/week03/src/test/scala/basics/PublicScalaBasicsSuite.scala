@@ -79,6 +79,19 @@ class PublicScalaBasicsSuite extends FunSuite {
     }
   }
 
+  test("[3a] The oddRange function for 0 should return an empty range") {
+    val r = oddRange(0)
+    assert(r.isEmpty, "Your range is not empty")
+  }
+
+  // This is not specified in the documentation, but seems like a reasonable implementation
+  test("[3b] The oddRange function for a negative number should return an empty range") {
+    for (i <- -1000 to -1) {
+      val r = oddRange(i)
+      assert(r.isEmpty, "Your range is not empty")
+    }
+  }
+
   test("[4] The minWhile function should return the minimum integer in an array using a while loop") {
     TreeTraversals.getMethod("src/main/scala/basics/ScalaBasics.scala", "minWhile") match {
       case Some(method) =>
