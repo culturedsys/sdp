@@ -131,7 +131,7 @@ object ScalaBasics {
       else
         base36recursive(digitToChar(value % 36) :: digits, value / 36)
 
-    base36recursive(List(), b).reverse.mkString
+    base36recursive(List(), b).mkString
   }
 
   /**
@@ -227,6 +227,12 @@ object ScalaBasics {
    * @param lines the lines of a text file
    * @return a map from words to the number of times that word was seen
    */
-  def wordCounter(lines: Array[String]): Map[String, Int] = ???
+  def wordCounter(lines: Array[String]): Map[String, Int] = {
+    lines.flatMap(line => line.split(' '))
+        .filter(word => !word.isEmpty)
+        .foldLeft(Map.empty[String, Int]) {
+          (map, word) => map + (word -> (1 + map.getOrElse(word, 0)))
+        }
+  }
 
 }
