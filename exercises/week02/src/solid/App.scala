@@ -14,7 +14,7 @@ object App {
     sensors += new FireSensor()
     sensors += new SmokeSensor()
 
-    val controlUnit: ControlUnit = new ControlUnit(sensors)
+    val controlUnit: ControlUnit = new SecurityControlUnit(sensors)
     val scanner: Scanner = new Scanner(System.in)
     var input: String = ""
     while (input != EXIT) {
