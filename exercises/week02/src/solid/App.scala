@@ -1,3 +1,5 @@
+package solid
+
 import java.io.IOException
 import java.util.Scanner
 import scala.collection.mutable.ListBuffer

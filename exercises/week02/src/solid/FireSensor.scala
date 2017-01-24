@@ -1,6 +1,8 @@
+package solid
+
 import scala.util.Random
 
-class FireSensor extends Sensor {
+class FireSensor extends Sensor with BatteryPowered {
 
   var battery = 100.0
 
