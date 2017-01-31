@@ -11,7 +11,10 @@ object Funcs {
      * @param ls: List[A] the list to process
      * @return A list containing all but the first element of ls
      */
-     def tail[A](ls: List[A]): List[A] = ???
+    def tail[A](ls: List[A]): List[A] = ls match {
+        case Nil => throw new IllegalArgumentException
+        case h :: t => t
+    }
 
     /**
      * setHead replaces the first value in a list with a given value. If the
@@ -21,7 +24,10 @@ object Funcs {
      * @return a list whose head is `a' and whose tail is all but the first
      * element of ls.
      */
-     def setHead[A](ls: List[A], a: A):List[A] = ???
+    def setHead[A](ls: List[A], a: A):List[A] = ls match {
+        case Nil => List(a)
+        case h :: t => a :: t
+    }
 
     /**
      * drop removes n elements from the given list. If n is greater than the
@@ -30,7 +36,11 @@ object Funcs {
      * @param n: Int the number of elements to drop.
      * @return a list with the first n elements of ls removed, or an empty list.
      */
-     def drop[A](ls: List[A], n: Int): List[A] = ???
+     def drop[A](ls: List[A], n: Int): List[A] = (ls, n) match {
+        case (_, 0) => ls
+        case (Nil, _) => Nil
+        case (h :: t, _) => drop(t, n - 1)
+    }
 
     /**
      * init takes a list and removes the last element.
@@ -39,7 +49,11 @@ object Funcs {
      * @param ls: List[A] the list to be changed.
      * @return a list with the last element of ls removed.
      */
-     def init[A](ls: List[A]):List[A] = ???
+     def init[A](ls: List[A]):List[A] = ls match {
+        case Nil => throw new IllegalArgumentException
+        case h :: Nil => Nil
+        case h :: t => h :: init(t)
+    }
 
     // LIST FOLDING
 
@@ -54,7 +68,10 @@ object Funcs {
      * list and the cumulative value.
      * @return the final valued.
      */
-    def foldLeft[A,B](ls: List[A], z: B)(f: (B, A) => B): B = ???
+    def foldLeft[A,B](ls: List[A], z: B)(f: (B, A) => B): B = ls match {
+        case Nil => z
+        case h :: t => foldLeft(t, f(z, h))(f)
+    }
 
     /**
      * Use your implementation of foldLeft to implement these functions:
@@ -68,11 +85,11 @@ object Funcs {
      * the sublists into one long list. For example, flatten(List(List(1,2,3),
      * List(4,5,6))) produces List(1,2,3,4,5,6).
      */
-     def sum(ls: List[Double]): Double = ???
-     def product(ls: List[Double]): Double = ???
-     def length[A](ls: List[A]): Int = ???
-     def reverse[A](ls: List[A]): List[A] = ???
-     def flatten[A](ls: List[List[A]]): List[A] = ???
+     def sum(ls: List[Double]): Double = foldLeft(ls, 0.0)(_ + _)
+     def product(ls: List[Double]): Double = foldLeft(ls, 1.0)(_ * _)
+     def length[A](ls: List[A]): Int = foldLeft(ls, 0)((acc, _) => acc + 1)
+     def reverse[A](ls: List[A]): List[A] = foldLeft(ls, Nil : List[A])((acc, elem) => elem :: acc)
+     def flatten[A](ls: List[List[A]]): List[A] = foldLeft(ls, Nil : List[A])((acc, otherList) => acc ++ otherList)
 
     // MAP AND FILTER
 

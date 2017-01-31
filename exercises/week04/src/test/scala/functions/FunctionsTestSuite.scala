@@ -10,21 +10,66 @@ class FunctionsTestSuite extends FunSuite {
         assert(tail(List(1,2,3,4)) == List(2,3,4))
     }
 
+    test("Tail on an empty list throws") {
+        assertThrows[IllegalArgumentException] {
+            tail(Nil)
+        }
+    }
+
+    test("Tail on a one-element list is the empty list") {
+        assert(tail(List(1)) == Nil)
+    }
+
     test("setHead changes the first element of the list") {
         assert(setHead(List("A", "B", "C"), "0") == List("0", "B", "C"))
+    }
+
+    test("setHead on an empty list is a list of just that element") {
+        assert(setHead(Nil, 4) == List(4))
+    }
+
+    test("setHead on a one-element list is the list of just that element") {
+        assert(setHead(List(1), 2) == List(2))
     }
 
     test("drop removes N elements from the front of the list") {
         assert(drop(List(1,2,3), 2) == List(3))
     }
 
+    test("drop on an empty list is an empty list") {
+        assert(drop(Nil, 10) == Nil)
+    }
+
+    test("drop of 0 elements returns the same list") {
+        val list = List(1, 2, 3)
+        assert(drop(list, 0) == list)
+    }
+
+    test("drop of more elements are on the list returns the empty list") {
+        assert(drop(List(1, 2, 3), 400) == Nil)
+    }
+
     test("init removes the last element") {
         assert(init(List("A","B","C","D")) == List("A","B","C"))
+    }
+
+    test("init on an empty list throws") {
+        assertThrows[IllegalArgumentException] {
+            init(Nil)
+        }
+    }
+
+    test("init on a one-element list is an empty list") {
+        assert(init(List(1)) == Nil)
     }
 
     // Folding
     test("foldLeft computes the correct value") {
         assert(foldLeft(List("H","e","l","l","o"), "")(_ + _) == "Hello")
+    }
+
+    test("foldLeft on an empty list is the initial value") {
+        assert(foldLeft(List(), 10)((_, _) => 1) == 10)
     }
 
     test("sum produces the correct sum") {
