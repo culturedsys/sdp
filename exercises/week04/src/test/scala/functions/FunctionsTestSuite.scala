@@ -97,13 +97,29 @@ class FunctionsTestSuite extends FunSuite {
         assert(map((1 to 10).toList)(_ + 1) == (2 to 11).toList)
     }
 
+    test("map on an empty list is an empty list") {
+        assert(map(Nil)(_ => 1) == Nil)
+    }
+
     test("filter filters the list") {
         assert(filter((-5 to 5).toList)(_ > 0) == (1 to 5).toList)
+    }
+
+    test("filter on an empty list is an empty list") {
+        assert(filter(Nil)(_ => false) == Nil)
     }
 
     test("flatMap maps and flattens") {
         assert(flatMap((1 to 5).toList)(x => (x to 5).toList) ==
             List(1,2,3,4,5, 2,3,4,5, 3,4,5, 4,5, 5))
+    }
+
+    test("flatMap on an empty list is an empty list") {
+        assert(flatMap(Nil)(_ => List(1)) == Nil)
+    }
+
+    test("flatMap with functions producing an empty list is an empty list") {
+        assert(flatMap(List(1, 2, 3))(_=>Nil) == Nil)
     }
 
     // Combined
