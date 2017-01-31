@@ -156,11 +156,11 @@ object Funcs {
             case (a, b) => if (a > b) a else b
         }
 
-        def runningAverage(acc: (Double, Int), next: Double) = acc match {
-            case (running, count) => (((running * count) + next) / (count + 1), count + 1)
-        }
+        val (total, count) = foldLeft(map(ls)(max), (0.0, 0))((acc, next) => acc match {
+            case (runningTotal, runningCount) => (runningTotal + next, runningCount + 1)
+        })
 
-        foldLeft(map(ls)(pair => max(pair)), (0.0, 0))(runningAverage)._1
+        total / count
     }
 
     /**
