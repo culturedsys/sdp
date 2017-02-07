@@ -1,20 +1,7 @@
 /**
   * A person with a first and second name
   */
-class Person(firstName: String, lastName: String) {
-
-  def getFirstName = firstName
-  def getLastName = lastName
-
-  override def equals(other: Any) = {
-    if (!other.isInstanceOf[Person])
-      false
-    else {
-      val otherPerson = other.asInstanceOf[Person]
-      firstName == otherPerson.getFirstName && lastName == otherPerson.getLastName
-    }
-  }
-}
+case class Person(firstName: String, lastName: String)
 
 object Person {
   def apply(name: String) = {
