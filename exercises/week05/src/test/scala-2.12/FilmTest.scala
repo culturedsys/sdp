@@ -6,9 +6,9 @@ import org.scalatest.FunSpec
 class FilmTest extends FunSpec {
   describe("Film") {
     val dob = 1980;
-    val director = new Director("Alice", "Person", dob);
+    val director = Director("Alice", "Person", dob);
     val filmYear = 2000;
-    val film = new Film("A Film in a Computer", filmYear, 8.9, director)
+    val film = Film("A Film in a Computer", filmYear, 8.9, director)
 
 
     it("can calculate the director's age") {
@@ -19,8 +19,9 @@ class FilmTest extends FunSpec {
       assert(film.isDirectedBy(director))
     }
 
+    val otherDirector = Director("Bob", "Someone", 1967)
+
     it("returns false if it was not directed by a given director") {
-      val otherDirector = new Director("Bob", "Someone", 1967)
       assert(!film.isDirectedBy(otherDirector))
     }
 
@@ -32,6 +33,16 @@ class FilmTest extends FunSpec {
       val newName = "A different film"
       val copy = film.copy(name=newName)
       assert(copy.name == newName)
+    }
+
+    val otherFilm = Film("Un Chien Andalou", 1970, 5.0, otherDirector)
+
+    it("can choose the highest rated") {
+      assert(Film.highestRating(film, otherFilm) == film)
+    }
+
+    it("can find the oldest director") {
+      assert(Film.oldestDirectorAtTheTime(film, otherFilm) == director)
     }
   }
 }

@@ -5,11 +5,18 @@ import org.scalatest.FunSpec
   */
 class DirectorTest extends FunSpec {
   describe("Director") {
+
+    val firstName = "Alice"
+    val lastName = "Person"
+    val director = Director(firstName, lastName, 1980)
+
     it("has a name") {
-      val firstName = "Alice"
-      val lastName = "Person"
-      val director = new Director(firstName, lastName, 1980)
       assert(director.name == firstName + " " + lastName)
+    }
+
+    it("can calculate which of two is older") {
+      val otherDirector = Director("Bob", "Nobody", 1960)
+      assert(Director.older(director, otherDirector) == otherDirector)
     }
   }
 }
