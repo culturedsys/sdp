@@ -14,14 +14,14 @@ class CounterTest extends FunSpec {
 
     it("can produce an incremented counter") {
       val initial = 10
-      val counter = new Counter(initial).inc
+      val counter = new Counter(initial).inc()
 
       assert(counter.count == initial + 1)
     }
 
     it("can produce a decremented counter") {
       val initial = 10
-      val counter = new Counter(initial).dec
+      val counter = new Counter(initial).dec()
 
       assert(counter.count == initial - 1)
     }
@@ -29,7 +29,7 @@ class CounterTest extends FunSpec {
     it("is unchanged when an incremented counter is produced") {
       val initial = 10
       val counter = new Counter(initial)
-      counter.inc
+      counter.inc()
 
       assert(counter.count == initial)
     }
@@ -37,9 +37,24 @@ class CounterTest extends FunSpec {
     it("is unchanged when a decremented counter is produced") {
       val initial = 10
       val counter = new Counter(initial)
-      counter.dec
+      counter.dec()
 
       assert(counter.count == initial)
     }
+
+    it("can produce a counter incremented by more than 1") {
+      val initial = 10
+      val increment = 5
+      val counter = new Counter(initial).inc(increment)
+      assert(counter.count == initial + increment)
+    }
+
+    it("can produce a counter decremented by more than 1") {
+      val initial = 10
+      val decrement = 5
+      val counter = new Counter(initial).dec(decrement)
+      assert(counter.count == initial - decrement)
+    }
+
   }
 }
