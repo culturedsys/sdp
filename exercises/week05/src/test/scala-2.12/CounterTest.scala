@@ -59,5 +59,13 @@ class CounterTest extends FunSpec {
     it("has a default count of 0") {
       assert(Counter().count == 0)
     }
+
+    it("can be adjusted") {
+      val initial = 10
+      val increment = 5
+      val counter = Counter(initial)
+      val adder = new Adder(increment)
+      assert(counter.adjust(adder).count == initial + increment)
+    }
   }
 }

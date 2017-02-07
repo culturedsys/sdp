@@ -4,6 +4,8 @@
 case class Counter(count: Int = 0) {
   def inc(increment: Int = 1): Counter = copy(count = count + increment)
   def dec(decrement: Int = 1): Counter = copy(count = count - decrement)
+
+  def adjust(adder: Adder) = copy(count = adder.add(count))
 }
 
 class Adder(amount: Int) {
