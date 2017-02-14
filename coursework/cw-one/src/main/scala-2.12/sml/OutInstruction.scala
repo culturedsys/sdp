@@ -7,6 +7,9 @@ case class OutInstruction(label: String, s1: Int) extends Instruction(label, "ou
   override def execute(m: Machine): Unit = {
     println(m.regs(s1))
   }
+
+  override def toString =
+    super.toString + " output r" + s1 + "\n"
 }
 
 object OutInstruction {

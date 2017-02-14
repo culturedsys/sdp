@@ -61,7 +61,7 @@ class Translator(fileName: String) {
     for (line <- lines) {
       val fields = line.split(" ")
 
-      if (!fields.isEmpty) {
+      if (fields.nonEmpty) {
         labels.add(fields(0))
 
         createInstruction(fields) match {

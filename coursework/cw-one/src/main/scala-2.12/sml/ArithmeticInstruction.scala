@@ -26,8 +26,4 @@ class ArithmeticInstruction(label: String, opcode: String,
     val value2 = m.regs(operand2)
     m.regs(result) = operation(value1, value2)
   }
-
-  override def toString(): String = {
-    super.toString + " " + operand1 + " + " + operand2 + " to " + result
-  }
 }

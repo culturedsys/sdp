@@ -12,6 +12,9 @@ case class BnzInstruction(label: String, s1: Int, l2: String) extends Instructio
       m.pc = index
     }
   }
+
+  override def toString =
+    super.toString + " branch to " + l2 + " if nonzero r" + s1 + "\n"
 }
 
 object BnzInstruction {
