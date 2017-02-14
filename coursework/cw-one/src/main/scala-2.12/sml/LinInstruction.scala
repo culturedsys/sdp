@@ -12,3 +12,8 @@ case class LinInstruction(label: String, r: Int, x: Int) extends Instruction(lab
     super.toString + " register " + r + " value is " + x + "\n"
   }
 }
+
+object LinInstruction {
+  def apply(fields: Array[String]): LinInstruction =
+    LinInstruction(fields(0), fields(2).toInt, fields(3).toInt)
+}

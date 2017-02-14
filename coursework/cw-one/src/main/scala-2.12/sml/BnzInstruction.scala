@@ -13,3 +13,8 @@ case class BnzInstruction(label: String, s1: Int, l2: String) extends Instructio
     }
   }
 }
+
+object BnzInstruction {
+  def apply(fields: Array[String]): BnzInstruction =
+    BnzInstruction(fields(0), fields(2).toInt, fields(3))
+}

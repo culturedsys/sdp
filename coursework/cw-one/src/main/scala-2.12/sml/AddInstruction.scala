@@ -5,3 +5,8 @@ package sml
   */
 case class AddInstruction(label: String, r: Int, s1: Int, s2: Int)
   extends ArithmeticInstruction(label, "add", r, s1, s2, _ + _)
+
+object AddInstruction {
+  def apply(fields: Array[String]): AddInstruction =
+    AddInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
+}

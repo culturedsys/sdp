@@ -26,19 +26,19 @@ class Translator(fileName: String) {
         labels.add(fields(0))
         fields(1) match {
           case ADD =>
-            program = program :+ AddInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
+            program = program :+ AddInstruction(fields)
           case SUB =>
-            program = program :+ SubInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
+            program = program :+ SubInstruction(fields)
           case MUL =>
-            program = program :+ MulInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
+            program = program :+ MulInstruction(fields)
           case DIV =>
-            program = program :+ DivInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
+            program = program :+ DivInstruction(fields)
           case OUT =>
-            program = program :+ OutInstruction(fields(0), fields(2).toInt)
+            program = program :+ OutInstruction(fields)
           case LIN =>
-            program = program :+ LinInstruction(fields(0), fields(2).toInt, fields(3).toInt)
+            program = program :+ LinInstruction(fields)
           case BNZ =>
-            program = program :+ BnzInstruction(fields(0), fields(2).toInt, fields(3))
+            program = program :+ BnzInstruction(fields)
           case x =>
             println(s"Unknown instruction $x")
         }

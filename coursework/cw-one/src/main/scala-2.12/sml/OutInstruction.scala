@@ -8,3 +8,8 @@ case class OutInstruction(label: String, s1: Int) extends Instruction(label, "ou
     println(m.regs(s1))
   }
 }
+
+object OutInstruction {
+  def apply(fields: Array[String]): OutInstruction =
+    OutInstruction(fields(0), fields(2).toInt)
+}
