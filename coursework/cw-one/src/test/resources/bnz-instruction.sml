@@ -1,0 +1,1 @@
+label bnz 0 somelabel

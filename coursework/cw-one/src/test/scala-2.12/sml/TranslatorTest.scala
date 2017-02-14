@@ -44,5 +44,11 @@ class TranslatorTest extends FunSpec {
 
       assert(machine.prog(0).isInstanceOf[OutInstruction])
     }
+
+    it("should translate a bnz instruction") {
+      val machine = Translator(PATH + "bnz-instruction.sml").readAndTranslate(initialMachine)
+
+      assert(machine.prog(0).isInstanceOf[BnzInstruction])
+    }
   }
 }
