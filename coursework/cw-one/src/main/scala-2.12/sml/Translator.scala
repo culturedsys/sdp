@@ -26,6 +26,8 @@ class Translator(fileName: String) {
         fields(1) match {
           case ADD =>
             program = program :+ AddInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
+          case SUB =>
+            program = program :+ SubInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
           case LIN =>
             program = program :+ LinInstruction(fields(0), fields(2).toInt, fields(3).toInt)
           case x =>

@@ -13,6 +13,12 @@ class TranslatorTest extends FunSpec {
       assert(machine.prog(0).isInstanceOf[AddInstruction])
     }
 
+    it("should translate a sub instruction") {
+      val machine = Translator("sub-instruction.sml").readAndTranslate(initialMachine)
+
+      assert(machine.prog(0).isInstanceOf[SubInstruction])
+    }
+
     it("should translate a lin instruction") {
       val machine =Translator("lin-instruction.sml").readAndTranslate(initialMachine)
 
