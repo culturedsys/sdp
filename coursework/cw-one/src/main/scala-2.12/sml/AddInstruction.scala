@@ -1,9 +1,7 @@
 package sml
 
-class AddInstruction(label: String, op: String, val result: Int, val op1: Int, val op2: Int)
-  extends ArithmeticInstruction(label, op, result, op1, op2, _ + _)
-
-object AddInstruction {
-  def apply(label: String, result: Int, op1: Int, op2: Int) =
-    new AddInstruction(label, "add", result, op1, op2)
-}
+/**
+  * Add the contents of registers s1 and s2 and store the result in register r
+  */
+case class AddInstruction(label: String, r: Int, s1: Int, s2: Int)
+  extends ArithmeticInstruction(label, "add", r, s1, s2, _ + _)

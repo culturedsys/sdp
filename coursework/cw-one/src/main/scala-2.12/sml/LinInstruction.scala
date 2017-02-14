@@ -1,16 +1,14 @@
 package sml
 
-case class LinInstruction(label: String, opcode: String, register: Int, value: Int) extends Instruction(label, opcode) {
+/**
+  * Store integer x in register r
+  */
+case class LinInstruction(label: String, r: Int, x: Int) extends Instruction(label, "lin") {
 
   override def execute(m: Machine) =
-    m.regs(register) = value
+    m.regs(r) = x
 
   override def toString(): String = {
-    super.toString + " register " + register + " value is " + value + "\n"
+    super.toString + " register " + r + " value is " + x + "\n"
   }
-}
-
-object LinInstruction {
-  def apply(label: String, register: Int, value: Int) =
-    new LinInstruction(label, "lin", register, value)
 }

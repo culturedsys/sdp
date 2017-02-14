@@ -1,4 +1,7 @@
 package sml
 
-case class SubInstruction(label: String, result: Int, operand1: Int, operand2: Int)
-  extends ArithmeticInstruction(label, "sub", result, operand1, operand2, _ - _)
+/**
+  * Subtract the contents of register s2 from the contents of s1 and store the result in register r
+  */
+case class SubInstruction(label: String, r: Int, s1: Int, s2: Int)
+  extends ArithmeticInstruction(label, "sub", r, s1, s2, _ - _)
