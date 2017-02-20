@@ -3,7 +3,7 @@ package sml
 /**
   * Print the contents of register s1 on the Java console (using println)
   */
-case class OutInstruction(label: String, s1: Int) extends Instruction(label, "out") {
+case class OutInstruction(label: String, opcode: String, s1: Int) extends Instruction(label, opcode) {
   override def execute(m: Machine): Unit = {
     println(m.regs(s1))
   }
@@ -13,6 +13,5 @@ case class OutInstruction(label: String, s1: Int) extends Instruction(label, "ou
 }
 
 object OutInstruction {
-  def apply(fields: Array[String]): OutInstruction =
-    OutInstruction(fields(0), fields(2).toInt)
+  def apply(label: String, s1: Int): OutInstruction = new OutInstruction(label, "out", s1)
 }

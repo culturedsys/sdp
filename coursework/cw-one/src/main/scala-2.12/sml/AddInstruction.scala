@@ -1,14 +1,20 @@
 package sml
 
-/**
-  * Add the contents of registers s1 and s2 and store the result in register r
-  */
-case class AddInstruction(label: String, r: Int, s1: Int, s2: Int)
-  extends ArithmeticInstruction(label, "add", r, s1, s2, _ + _) {
-  override def toString = super.toString + " r" + s1 + " + r" + s2 + " to r" + r + "\n"
+class AddInstruction(label: String, op: String, val result: Int, val op1: Int, val op2: Int)
+  extends Instruction(label, op) {
+
+  override def execute(m: Machine) {
+    val value1 = m.regs(op1)
+    val value2 = m.regs(op2)
+    m.regs(result) = value1 + value2
+  }
+
+  override def toString(): String = {
+    super.toString + " " + op1 + " + " + op2 + " to " + result
+  }
 }
 
 object AddInstruction {
-  def apply(fields: Array[String]): AddInstruction =
-    AddInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
+  def apply(label: String, result: Int, op1: Int, op2: Int) =
+    new AddInstruction(label, "add", result, op1, op2)
 }
