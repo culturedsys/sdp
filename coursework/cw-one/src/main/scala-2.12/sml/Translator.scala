@@ -1,7 +1,5 @@
 package sml
 
-import java.lang.reflect.Modifier
-
 /*
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  */

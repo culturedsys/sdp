@@ -18,8 +18,6 @@ class ArithmeticInstruction(label: String, opcode: String,
   /**
     * Apply the supplied operation to the values in the given operand registers, and store the result in the given
     * result register
-    *
-    * @param m
     */
   override def execute(m: Machine) {
     val value1 = m.regs(operand1)

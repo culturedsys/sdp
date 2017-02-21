@@ -6,7 +6,7 @@ class OutInstructionTest extends FunSpec with NonBranchingBehaviours {
   describe("OutInstruction") {
     it("should print the value of the register") {
 
-      val value = 10;
+      val value = 10
 
       val machine = Machine(Labels(), Vector.empty)
 

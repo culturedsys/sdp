@@ -6,7 +6,7 @@ package sml
   */
 case class DivInstruction(label: String, opcode: String, r: Int, s1: Int, s2: Int)
   extends ArithmeticInstruction(label, opcode, r, s1, s2, _ / _) {
-  override def toString = super.toString + " r" + s1 + " / r" + s2 + " to r" + r + "\n"
+  override def toString() = super.toString + " r" + s1 + " / r" + s2 + " to r" + r + "\n"
 }
 
 object DivInstruction {
