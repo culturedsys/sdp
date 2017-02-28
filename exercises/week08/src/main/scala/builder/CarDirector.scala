@@ -24,8 +24,8 @@ case class CarDirector(carBuilder: CarBuilder) {
 }
 
 /**
-  * Different features that can be added to a car. The specific way these are dealt with depends on the CarBuilder
-  * instance being used.
+  * Different features that can be added to a car. They are used to describe a Car to the director and the builder
+  * classes. The specific way these are dealt with depends on the CarBuilder instance being used.
   */
 sealed trait Feature {
     def description: String
