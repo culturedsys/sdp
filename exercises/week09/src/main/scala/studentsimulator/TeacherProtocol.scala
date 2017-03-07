@@ -1,13 +1,14 @@
 package studentsimulator
 
 import scala.util.Random
-import akka.actor.{Actor, ActorLogging}
-import studentsimulator.TeacherProtocol.{QuoteRequest, QuoteResponse}
+import akka.actor.{Actor, ActorLogging, ActorRef}
+import studentsimulator.TeacherProtocol.{InitSignal, QuoteRequest, QuoteResponse}
 
 /**
   * The protocol used to communicate with Teacher actors
   */
 object TeacherProtocol {
+  case class InitSignal()
   case class QuoteRequest()
   case class QuoteResponse(quoteString: String)
 }
@@ -23,8 +24,17 @@ class TeacherActor extends Actor with ActorLogging {
   override def receive = {
     case QuoteRequest => {
       val quote = QuoteResponse(quotes(Random.nextInt(quotes.size)))
+      sender ! quote
+    }
+  }
+}
 
-      log.info("Your quote: " + quote)
+class StudentActor(teacher: ActorRef) extends Actor with ActorLogging {
+  override def receive = {
+    case InitSignal =>
+      teacher ! QuoteRequest
+    case QuoteResponse(quote) => {
+      log.info(s"Received QuoteResponse: ${quote}")
     }
   }
 }
