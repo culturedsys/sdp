@@ -1,8 +1,7 @@
 package studentsimulator
 
 import scala.util.Random
-
-import akka.actor.Actor
+import akka.actor.{Actor, ActorLogging}
 import studentsimulator.TeacherProtocol.{QuoteRequest, QuoteResponse}
 
 /**
@@ -13,7 +12,7 @@ object TeacherProtocol {
   case class QuoteResponse(quoteString: String)
 }
 
-class TeacherActor extends Actor {
+class TeacherActor extends Actor with ActorLogging {
 
   val quotes = List(
     "A spectre is haunting Europe",
@@ -25,7 +24,7 @@ class TeacherActor extends Actor {
     case QuoteRequest => {
       val quote = QuoteResponse(quotes(Random.nextInt(quotes.size)))
 
-      println("Your quote: " + quote)
+      log.info("Your quote: " + quote)
     }
   }
 }
