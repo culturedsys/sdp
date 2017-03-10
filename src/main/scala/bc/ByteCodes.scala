@@ -42,3 +42,29 @@ class IAdd extends ByteCode {
     step2.push(left + right)
   }
 }
+
+/** Implementation of the isub bytecode
+  *
+  * The isub instruction pops the top two values from the virtual machine stack and pushes the result.
+  * VM.push(VM.pop() - VM.pop())
+  */
+class ISub extends ByteCode {
+  /**
+    * A unique byte value representing the bytecode. An implementation
+    * will set this to the bytecode corresponding to the name of the
+    * bytecode in [[ByteCodeValues]]
+    */
+  override val code: Byte = bytecode("isub")
+
+  /**
+    * Returns a new [[VirtualMachine]] after executing this bytecode operation.
+    *
+    * @param vm the initial virtual machine
+    * @return a new virtual machine
+    */
+  override def execute(vm: VirtualMachine): VirtualMachine = {
+    val (left, step1) = vm.pop()
+    val (right, step2) = step1.pop()
+    step2.push(left - right)
+  }
+}
