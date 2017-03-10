@@ -191,5 +191,23 @@ class ByteCodesSpec extends FunSpec with ByteCodeValues {
         assert(idec.execute(vm).state.size === vm.state.size)
       }
     }
+
+    describe("idup") {
+      val idup = new IDup
+
+      it("should have the correct code value") {
+        assert(idup.code === bytecode("idup"))
+      }
+
+      it("should duplicate the top value") {
+        val result = idup.execute(vm)
+        assert(result.state.head === value)
+        assert(result.state.tail.head === value)
+      }
+
+      it("should increase the stack length by one") {
+        assert(idup.execute(vm).state.size === vm.state.size + 1)
+      }
+    }
   }
 }

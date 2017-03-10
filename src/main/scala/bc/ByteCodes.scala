@@ -196,3 +196,28 @@ class ISwap extends ByteCode {
     step2.push(top).push(next)
   }
 }
+
+/** Implementation of the idup bytecode
+  *
+  * The idup instruction pops the top value from the stack and pushes it twice onto the stack (duplicates the top
+  * value).
+  *
+  * x = VM.pop();
+  * VM.push(x);
+  * VM.push(x).
+  */
+class IDup extends ByteCode {
+  /** A unique byte value representing the bytecode. */
+  override val code: Byte = bytecode("idup")
+
+  /**
+    * Returns a new [[VirtualMachine]] after executing this bytecode operation.
+    *
+    * @param vm the initial virtual machine
+    * @return a new virtual machine
+    */
+  override def execute(vm: VirtualMachine): VirtualMachine = {
+    val (top, result) = vm.pop()
+    result.push(top).push(top)
+  }
+}
