@@ -119,4 +119,26 @@ class ByteCodeSpec extends FunSpec with ByteCodeValues {
       }
     }
   }
+
+  describe("Unary operations") {
+
+    val value = 10
+    val vm = new VirtualMachineMock(Vector(value))
+
+    describe("ineg") {
+      val ineg = new INeg
+
+      it("should have the correct code value") {
+        assert(ineg.code === bytecode("ineg"))
+      }
+
+      it("should push the correct negative value") {
+        assert(ineg.execute(vm).state.head === -value)
+      }
+
+      it("should should not alter the stack length") {
+        assert(ineg.execute(vm).state.size === vm.state.size)
+      }
+    }
+  }
 }

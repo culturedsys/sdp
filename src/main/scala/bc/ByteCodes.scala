@@ -104,3 +104,24 @@ class IRem extends ArithmeticByteCode(_ % _) {
     */
   override val code: Byte = bytecode("irem")
 }
+
+/** Implementation of the ineg bytecode
+  *
+  * The ineg instruction pops the the top value from the virtual machine stack, negates it, and pushes the result.
+  * VM.push(-VM.pop())
+  */
+class INeg extends ByteCode {
+  /** A unique byte value representing the bytecode. */
+  override val code: Byte = bytecode("ineg")
+
+  /**
+    * Returns a new [[VirtualMachine]] after executing this bytecode operation.
+    *
+    * @param vm the initial virtual machine
+    * @return a new virtual machine
+    */
+  override def execute(vm: VirtualMachine): VirtualMachine = {
+    val (operand, result) = vm.pop()
+    result.push(-operand)
+  }
+}
