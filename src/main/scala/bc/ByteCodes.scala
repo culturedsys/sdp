@@ -168,3 +168,31 @@ class IDec extends ByteCode {
     result.push(operand - 1)
   }
 }
+
+
+/** Implementation of the iswap bytecode
+  *
+  * The iswap instruction pops the top two values from the virtual machine stack and pushes them in the opposite
+  * order, effectively swapping the top two values of the stack.
+  * x = VM.pop();
+  * y = VM.pop();
+  * VM.push(x);
+  * VM.push(y)
+  */
+class ISwap extends ByteCode {
+  /**
+    * A unique byte value representing the bytecode */
+  override val code: Byte = bytecode("iswap")
+
+  /**
+    * Returns a new [[VirtualMachine]] after executing this bytecode operation.
+    *
+    * @param vm the initial virtual machine
+    * @return a new virtual machine
+    */
+  override def execute(vm: VirtualMachine): VirtualMachine = {
+    val (top, step1) = vm.pop()
+    val (next, step2) = step1.pop()
+    step2.push(top).push(next)
+  }
+}

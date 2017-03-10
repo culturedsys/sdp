@@ -118,6 +118,25 @@ class ByteCodesSpec extends FunSpec with ByteCodeValues {
         }
       }
     }
+
+    describe("iswap") {
+      val iswap = new ISwap
+
+      it("should have the correct code") {
+        assert(iswap.code === bytecode("iswap"))
+      }
+
+      it("should swap the top two stack members") {
+        val result = iswap.execute(vm)
+
+        assert(result.state.head === second)
+        assert(result.state.tail.head === first)
+      }
+
+      it("should not change the length of the stack") {
+        assert(iswap.execute(vm).state.size === vm.state.size)
+      }
+    }
   }
 
   describe("Unary operations") {
