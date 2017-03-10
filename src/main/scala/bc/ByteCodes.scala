@@ -73,3 +73,34 @@ class IMul extends ArithmeticByteCode(_ * _) {
     */
   override val code: Byte = bytecode("imul")
 }
+
+/** Implementation of the idiv bytecode.
+  *
+  * The idiv instruction pops the top two values from the virtual machine stack and pushes the result.
+  * VM.push(VM.pop() / VM.pop())
+  *
+  * The specification does not say what to do in the case of divide by zero. This implementation simply throws the
+  * ArithmeticException in that case.
+  */
+class IDiv extends ArithmeticByteCode(_ / _) {
+  /**
+    * A unique byte value representing the bytecode.
+    */
+  override val code: Byte = bytecode("idiv")
+}
+
+
+/** Implementation of the irem bytecode.
+  *
+  * The irem instruction pops the top two values from the virtual machine stack and pushes the result.
+  * VM.push(VM.pop() % VM.pop())
+  *
+  * The specification does not say what to do in the case of divide by zero. This implementation simply throws the
+  * ArithmeticException in that case.
+  */
+class IRem extends ArithmeticByteCode(_ % _) {
+  /**
+    * A unique byte value representing the bytecode.
+    */
+  override val code: Byte = bytecode("irem")
+}
