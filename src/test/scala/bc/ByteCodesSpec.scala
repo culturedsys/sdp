@@ -1,5 +1,7 @@
 package bc
 
+import java.awt.print.Printable
+
 import org.scalatest.FunSpec
 
 /**
@@ -207,6 +209,26 @@ class ByteCodesSpec extends FunSpec with ByteCodeValues {
 
       it("should increase the stack length by one") {
         assert(idup.execute(vm).state.size === vm.state.size + 1)
+      }
+    }
+
+    describe("print") {
+      val print = new Print
+
+      it("should have the correct code value") {
+        assert(print.code === bytecode("print"))
+      }
+
+      it("should print the top value on the stack") {
+        val stream = new java.io.ByteArrayOutputStream
+        Console.withOut(stream) {
+          print.execute(vm)
+        }
+        assert(stream.toString() === s"$value\n")
+      }
+
+      it("should decrease the length of the stack by one") {
+        assert(print.execute(vm).state.size === vm.state.size - 1)
       }
     }
   }

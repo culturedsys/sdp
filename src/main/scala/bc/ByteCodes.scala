@@ -221,3 +221,28 @@ class IDup extends ByteCode {
     result.push(top).push(top)
   }
 }
+
+/** Implementation of the print bytecode
+  *
+  * The print instruction pops the top value from the stack and prints the value to the console.
+  *
+  * The specification does not say that a newline or other separator should be printed after the value, but this seems
+  * useful (otherwise there would be no way of telling apart the output of separate print instructions), so this
+  * implementation adds a newline after printing the value.
+  */
+class Print extends ByteCode {
+  /** A unique byte value representing the bytecode.*/
+  override val code: Byte = bytecode("print")
+
+  /**
+    * Returns a new [[VirtualMachine]] after executing this bytecode operation.
+    *
+    * @param vm the initial virtual machine
+    * @return a new virtual machine
+    */
+  override def execute(vm: VirtualMachine): VirtualMachine = {
+    val (top, result) = vm.pop()
+    println(top)
+    result
+  }
+}
