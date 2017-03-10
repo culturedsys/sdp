@@ -57,9 +57,19 @@ class IAdd extends ArithmeticByteCode(_ + _) {
   */
 class ISub extends ArithmeticByteCode(_ - _) {
   /**
-    * A unique byte value representing the bytecode. An implementation
-    * will set this to the bytecode corresponding to the name of the
-    * bytecode in [[ByteCodeValues]]
+    * A unique byte value representing the bytecode.
     */
   override val code: Byte = bytecode("isub")
+}
+
+/** Implementation of the imul bytecode
+  *
+  * The imul instruction pops the top two values from the virtual machine stack and pushes the result.
+  * VM.push(VM.pop() * VM.pop())
+  */
+class IMul extends ArithmeticByteCode(_ * _) {
+  /**
+    * A unique byte value representing the bytecode.
+    */
+  override val code: Byte = bytecode("imul")
 }

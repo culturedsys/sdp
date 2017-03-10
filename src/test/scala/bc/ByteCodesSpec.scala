@@ -57,4 +57,20 @@ class ByteCodeSpec extends FunSpec with ByteCodeValues {
       assert(isub.execute(vm).state.tail.isEmpty)
     }
   }
+
+  describe ("imul") {
+    val imul = new IMul
+
+    it("should have the correct code value") {
+      assert(imul.code === bytecode("imul"))
+    }
+
+    it("should push the correct product") {
+      assert(imul.execute(vm).state.head === first * second)
+    }
+
+    it("should remove its operands from the stack") {
+      assert(imul.execute(vm).state.tail.isEmpty)
+    }
+  }
 }
