@@ -5,7 +5,7 @@ import org.scalatest.FunSpec
 /**
   * Test the definition and operation of the various bytecodes
   */
-class ByteCodeSpec extends FunSpec with ByteCodeValues {
+class ByteCodesSpec extends FunSpec with ByteCodeValues {
   describe("iconst") {
     val iconst = new IConst(4)
 
@@ -138,6 +138,38 @@ class ByteCodeSpec extends FunSpec with ByteCodeValues {
 
       it("should should not alter the stack length") {
         assert(ineg.execute(vm).state.size === vm.state.size)
+      }
+    }
+
+    describe("iinc") {
+      val iinc = new IInc
+
+      it("should have the correct code value") {
+        assert(iinc.code == bytecode("iinc"))
+      }
+
+      it("should push the correct incremented value") {
+        assert(iinc.execute(vm).state.head === value + 1)
+      }
+
+      it("should not alter the stack length") {
+        assert(iinc.execute(vm).state.size === vm.state.size)
+      }
+    }
+
+    describe("idec") {
+      val idec = new IDec
+
+      it("should have the correct code value") {
+        assert(idec.code === bytecode("idec"))
+      }
+
+      it("should push the correct decremented value") {
+        assert(idec.execute(vm).state.head === value - 1)
+      }
+
+      it("should not alter the stack length") {
+        assert(idec.execute(vm).state.size === vm.state.size)
       }
     }
   }

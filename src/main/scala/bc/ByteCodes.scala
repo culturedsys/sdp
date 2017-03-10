@@ -125,3 +125,46 @@ class INeg extends ByteCode {
     result.push(-operand)
   }
 }
+
+/** Implementation of the iinc bytecode.
+  *
+  * The iinc instruction pops the the top value from the virtual machine stack, increments it, and pushes the result.
+  * VM.push(VM.pop()+1)
+  */
+class IInc extends ByteCode {
+  /** A unique byte value representing the bytecode. */
+  override val code: Byte = bytecode("iinc")
+
+  /**
+    * Returns a new [[VirtualMachine]] after executing this bytecode operation.
+    *
+    * @param vm the initial virtual machine
+    * @return a new virtual machine
+    */
+  override def execute(vm: VirtualMachine): VirtualMachine = {
+    val (operand, result) = vm.pop()
+    result.push(operand + 1)
+  }
+}
+
+/** Implementation of the idec bytecode
+  *
+  * The idec instruction pops the the top value from the virtual machine stack, decrements it, and pushes the result.
+  * VM.push(VM.pop()-1)
+  */
+class IDec extends ByteCode {
+  /**
+    * A unique byte value representing the bytecode. */
+  override val code: Byte = bytecode("idec")
+
+  /**
+    * Returns a new [[VirtualMachine]] after executing this bytecode operation.
+    *
+    * @param vm the initial virtual machine
+    * @return a new virtual machine
+    */
+  override def execute(vm: VirtualMachine): VirtualMachine = {
+    val (operand, result) = vm.pop()
+    result.push(operand - 1)
+  }
+}
