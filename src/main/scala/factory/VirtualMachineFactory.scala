@@ -10,12 +10,21 @@ import vm.{VirtualMachine, VirtualMachineParser}
   * implement each method such that it returns an object of the correct type.
   */
 object VirtualMachineFactory {
-  def byteCodeFactory: ByteCodeFactory = bc.ByteCodeFactoryImpl
+  /**
+    * Get a default implementation of ByteCodeFactory.
+    */
+  val byteCodeFactory: ByteCodeFactory = bc.ByteCodeFactoryImpl
 
   // TODO
   def vendorParser: ProgramParser = ???
 
-  def byteCodeParser: ByteCodeParser = new ByteCodeParserImpl(byteCodeFactory)
+  /**
+    * Get a default implementation of ByteCodeParser.
+    *
+    * (Implemented as a lazy val so that we only create one ByteCodeParser instance, and delay
+    * creation until, or if, it is required.)
+    */
+  lazy val byteCodeParser: ByteCodeParser = new ByteCodeParserImpl(byteCodeFactory)
 
   // TODO
   def virtualMachineParser: VirtualMachineParser = ???
