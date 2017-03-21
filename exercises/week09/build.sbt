@@ -1,14 +1,18 @@
-name := """akka-scala-seed"""
+name := """exercises week09 Design Patterns"""
 
 version := "1.0"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.12.1"
 
-libraryDependencies ++= Seq(
-  // Change this to another test framework if you prefer
-  "org.scalatest" %% "scalatest" % "2.1.6" % "test",
-  // Akka
-  "com.typesafe.akka" %% "akka-actor" % "2.3.5",
-  //"com.typesafe.akka" %% "akka-remote" % "2.3.5",
-  "com.typesafe.akka" %% "akka-testkit" % "2.3.5"
-)
+// Change this to another test framework if you prefer
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.1"
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+
+// Need to pull this in for reflective capabilities.
+libraryDependencies += "org.scala-lang" % "scala-compiler" % scalaVersion.value
+
+// Exclude some folders associated with IntelliJ
+ideaExcludeFolders += ".idea"
+
+ideaExcludeFolders += ".idea_modules"
