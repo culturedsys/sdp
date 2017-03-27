@@ -13,7 +13,7 @@ case class BnzInstruction(label: String, opcode: String, s1: Int, l2: String) ex
     }
   }
 
-  override def toString(): String =
+  override def toString: String =
     super.toString + " branch to " + l2 + " if nonzero r" + s1 + "\n"
 }
 

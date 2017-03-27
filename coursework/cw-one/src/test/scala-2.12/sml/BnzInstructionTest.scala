@@ -27,7 +27,7 @@ class BnzInstructionTest extends FunSpec {
 
       val machine = Machine(labels, Vector.empty)
 
-      machine.regs(0) = 10
+      machine.regs(0) = 1
 
       val instruction = BnzInstruction("no label", 0, target)
 

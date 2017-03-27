@@ -46,9 +46,11 @@ class Translator(fileName: String) {
         val paramsWithTypes = fields.zip(constructor.getParameterTypes)
         val params = paramsWithTypes.map {
           case (param, paramType) =>
-            if (paramType == classOf[Integer] || paramType == classOf[Int])
+            if (paramType == classOf[Integer] || paramType == classOf[Int]) {
               Integer.valueOf(param)
-            else param
+            } else {
+              param
+            }
         }
         constructor.newInstance(params:_*).asInstanceOf[Instruction]
       }
@@ -82,5 +84,5 @@ class Translator(fileName: String) {
 }
 
 object Translator {
-  def apply(file: String) = new Translator(file)
+  def apply(file: String): Translator = new Translator(file)
 }

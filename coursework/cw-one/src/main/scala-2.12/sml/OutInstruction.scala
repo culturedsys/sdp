@@ -8,7 +8,7 @@ case class OutInstruction(label: String, opcode: String, s1: Int) extends Instru
     println(m.regs(s1))
   }
 
-  override def toString() =
+  override def toString: String =
     super.toString + " output r" + s1 + "\n"
 }
 

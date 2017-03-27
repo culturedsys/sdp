@@ -9,12 +9,12 @@ class AddInstruction(label: String, op: String, val result: Int, val op1: Int, v
     m.regs(result) = value1 + value2
   }
 
-  override def toString(): String = {
+  override def toString: String = {
     super.toString + " " + op1 + " + " + op2 + " to " + result
   }
 }
 
 object AddInstruction {
-  def apply(label: String, result: Int, op1: Int, op2: Int) =
+  def apply(label: String, result: Int, op1: Int, op2: Int): AddInstruction =
     new AddInstruction(label, "add", result, op1, op2)
 }
