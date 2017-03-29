@@ -63,7 +63,9 @@ class BinaryTreeSet extends Actor {
 
   // optional
   /** Accepts `Operation` and `GC` messages. */
-  val normal: Receive = { case _ => ??? }
+  val normal: Receive = {
+    case op: Operation => root ! op
+  }
 
   // optional
   /** Handles messages while garbage collection is performed.
@@ -89,7 +91,9 @@ class BinaryTreeNode(val elem: Int, initiallyRemoved: Boolean) extends Actor {
   import BinaryTreeNode._
   import BinaryTreeSet._
 
-  var subtrees = Map[Position, ActorRef]()
+  var left : Option[ActorRef] = None
+  var right: Option[ActorRef] = None
+
   var removed = initiallyRemoved
 
   // optional
@@ -97,7 +101,50 @@ class BinaryTreeNode(val elem: Int, initiallyRemoved: Boolean) extends Actor {
 
   // optional
   /** Handles `Operation` messages and `CopyTo` requests. */
-  val normal: Receive = { case _ => ??? }
+  val normal: Receive = {
+    case op @ Contains(requester, id, needle) =>
+      if (needle == elem) {
+        requester ! ContainsResult(id, !removed)
+      } else {
+        val child = if (needle < elem) left else right
+        child match {
+          case None => requester ! ContainsResult(id, false)
+          case Some(actor) => actor ! op
+        }
+      }
+
+    case op @ Insert(requester, id, newElem) =>
+      if (newElem == elem) {
+        removed = false
+        requester ! OperationFinished(id)
+      } else {
+        val child = if (newElem < elem) left else right
+        val newChild = child match {
+          case None =>
+            requester ! OperationFinished(id)
+            Some(context.actorOf(BinaryTreeNode.props(newElem, false)))
+          case Some(actor) =>
+            actor ! op
+            child
+        }
+        if (newElem < elem)
+          left = newChild
+        else
+          right = newChild
+      }
+
+    case op @ Remove(requester, id, needle) =>
+      if (needle == elem) {
+        removed = true
+        requester ! OperationFinished(id)
+      } else {
+        val child = if (needle < elem) left else right
+        child match {
+          case None => requester ! OperationFinished(id)
+          case Some(actor) => actor ! op
+        }
+      }
+  }
 
   // optional
   /** `expected` is the set of ActorRefs whose replies we are waiting for,
