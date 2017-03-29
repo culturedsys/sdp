@@ -50,9 +50,10 @@ class BinaryTreeSuite(_system: ActorSystem) extends TestKit(_system) with FunSui
     expectMsg(ContainsResult(1, false))
 
     topNode ! Insert(testActor, id = 2, 1)
+    expectMsg(OperationFinished(2))
+
     topNode ! Contains(testActor, id = 3, 1)
 
-    expectMsg(OperationFinished(2))
     expectMsg(ContainsResult(3, true))
   }
 
@@ -112,7 +113,7 @@ class BinaryTreeSuite(_system: ActorSystem) extends TestKit(_system) with FunSui
 
     val requester = TestProbe()
     val topNode = system.actorOf(Props[BinaryTreeSet])
-    val count = 1000
+    val count = 10000
 
     val ops = randomOperations(requester.ref, count)
     val expectedReplies = referenceReplies(ops)
