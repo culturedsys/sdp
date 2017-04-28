@@ -8,12 +8,12 @@ object TestIteratorPattern extends App {
     storage.addShape("Rectangle")
     storage.addShape("Square")
 
-    var iterator = new ShapeIterator(storage.shapes)
+    var iterator = storage.iterator()
 
     while (iterator.hasNext) println(iterator.next())
 
     println("Apply removing while iterating...")
-    iterator = new ShapeIterator(storage.shapes)
+    iterator = storage.iterator()
 
     while (iterator.hasNext) {
       println(iterator.next())
