@@ -1,16 +1,17 @@
 package prototype
 
 class AccessControl(controlLevel: String, access: String) {
-  override def clone() = new AccessControl(controlLevel, access)
+  // Renamed from clone to avoid name clash with the dubious clone method on Object
+  def duplicate(): AccessControl = new AccessControl(controlLevel, access)
 
   private var myControlLevel = controlLevel
   private var myAccess = access
 
-  def getControlLevel = myControlLevel
-  def setControlLevel(controlLevel: String) = myControlLevel = controlLevel
+  def getControlLevel: String = myControlLevel
+  def setControlLevel(controlLevel: String): Unit = myControlLevel = controlLevel
 
-  def getAccess = myAccess
-  def setAccess(access: String) = myAccess = access
+  def getAccess: String = myAccess
+  def setAccess(access: String): Unit = myAccess = access
 }
 
 object AccessControlProvider {
@@ -19,5 +20,5 @@ object AccessControlProvider {
     "MANAGER" -> new AccessControl("MANAGER", "GENERATE/READ REPORTS")
   )
 
-  def getAccessControlObject(level: String) = defaults(level).clone()
+  def getAccessControlObject(level: String): AccessControl = defaults(level).duplicate()
 }

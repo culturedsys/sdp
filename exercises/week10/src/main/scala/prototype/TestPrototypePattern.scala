@@ -10,9 +10,10 @@ object TestPrototypePattern extends App {
     userAccessControl = AccessControlProvider.getAccessControlObject("USER")
     user = new User("User B", "USER Level", userAccessControl)
 
-    println("Changing access control of: " + user.userName)
+    println("Changing access control of: " + user.getUserName)
     
-    user.accessControl.access = "READ REPORTS"
+    user.getAccessControl.setAccess("READ REPORTS")
+
     println(user)
     println("************************************")
     
