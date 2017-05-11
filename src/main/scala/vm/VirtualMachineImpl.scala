@@ -32,7 +32,12 @@ class VirtualMachineImpl(val state: Vector[Int]) extends VirtualMachine {
     * @param bc the vector of bytecodes
     * @return a tuple of a new vector of bytecodes and virtual machine
     */
-  override def executeOne(bc: Vector[ByteCode]): (Vector[ByteCode], VirtualMachine) = ???
+  override def executeOne(bc: Vector[ByteCode]): (Vector[ByteCode], VirtualMachine) = bc match {
+    case first +: rest => (rest, first.execute(this))
+    // The specification does not mandate any behaviour for an empty vector, but it seems better
+    // to explicitly handle the case.
+    case _ => throw new IllegalArgumentException
+  }
 
   /**
     * Pushes an integer value onto the virtual machine stack.
