@@ -1,6 +1,7 @@
 package vm
 import bc.ByteCode
 
+import scala.annotation.tailrec
 import scala.collection.immutable.Vector
 
 /**
@@ -18,7 +19,16 @@ class VirtualMachineImpl(val state: Vector[Int]) extends VirtualMachine {
     * @param bc a vector of bytecodes
     * @return a new virtual machine
     */
-  override def execute(bc: Vector[ByteCode]): VirtualMachine = ???
+  override def execute(bc: Vector[ByteCode]): VirtualMachine = {
+    if (bc.nonEmpty) {
+      val (restByteCodes, resultVm) = executeOne(bc)
+      resultVm.execute(restByteCodes)
+    }
+    else
+      // The specification states that if a sequence of bytecodes runs successfully, the
+      // resulting VM should have an empty state.
+      new VirtualMachineImpl(Vector.empty)
+  }
 
   /**
     * Executes the next bytecode in the vector of bytecodes.

@@ -36,4 +36,54 @@ class VirtualMachineImplSpec extends FunSpec {
       }
     }
   }
+
+  describe("executeOne") {
+    it("should call execute on one bytecode") {
+      val bc = new ByteCodeMock
+      emptyVm.executeOne(Vector(bc))
+      assert(bc.executed === 1)
+    }
+
+    it("should call execute on the first bytecode") {
+      val bc1 = new ByteCodeMock
+      val bc2 = new ByteCodeMock
+      emptyVm.executeOne(Vector(bc1, bc2))
+      assert(bc1.executed === 1)
+      assert(bc2.executed === 0)
+    }
+
+    it("should return the remaining bytecodes") {
+      val bc1 = new ByteCodeMock
+      val bc2 = new ByteCodeMock
+      val bc3 = new ByteCodeMock
+
+      val (rest, _) = emptyVm.executeOne(Vector(bc1, bc2, bc3))
+      assert(rest === Vector(bc2, bc3))
+    }
+  }
+
+  describe("execute") {
+    it("should return an empty vm on an empty vector of bytecode") {
+      assert(nonEmptyVm.execute(Vector.empty).state === Vector.empty)
+    }
+
+    it("should return an empty vm on a vector with multiple bytecodes") {
+      val bc1 = new ByteCodeMock
+      val bc2 = new ByteCodeMock
+      val bc3 = new ByteCodeMock
+
+      assert(emptyVm.execute(Vector(bc1, bc2, bc3)).state === Vector.empty)
+    }
+
+    it("should execute all the bytecodes in a vector") {
+      val bc1 = new ByteCodeMock
+      val bc2 = new ByteCodeMock
+      val bc3 = new ByteCodeMock
+
+      emptyVm.execute(Vector(bc1, bc2, bc3))
+      assert(bc1.executed === 1)
+      assert(bc2.executed === 1)
+      assert(bc3.executed === 1)
+    }
+  }
 }
