@@ -220,11 +220,11 @@ class ByteCodesSpec extends FunSpec with ByteCodeValues {
       }
 
       it("should print the top value on the stack") {
-        val stream = new java.io.ByteArrayOutputStream
+        val stream = new java.io.ByteArrayOutputStream()
         Console.withOut(stream) {
           print.execute(vm)
         }
-        assert(stream.toString() === s"$value\n")
+        assert(stream.toString() === s"$value${System.lineSeparator}")
       }
 
       it("should decrease the length of the stack by one") {
