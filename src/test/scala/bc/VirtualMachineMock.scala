@@ -8,10 +8,10 @@ import vm.VirtualMachine
   */
 class VirtualMachineMock(val state: Vector[Int]) extends VirtualMachine {
   /** Intentionally unimplemented in this mock */
-  override def execute(bc: Vector[ByteCode]): VirtualMachine = ???
+  override def execute(bc: Vector[ByteCode]): VirtualMachine = throw new NotImplementedError
 
   /** Intentionally unimplemented in this mock */
-  override def executeOne(bc: Vector[ByteCode]): (Vector[ByteCode], VirtualMachine) = ???
+  override def executeOne(bc: Vector[ByteCode]): (Vector[ByteCode], VirtualMachine) = throw new NotImplementedError
 
   /**
     * Pushes an integer value onto the virtual machine stack.
