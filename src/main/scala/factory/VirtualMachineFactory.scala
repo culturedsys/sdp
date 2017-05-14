@@ -1,11 +1,8 @@
 package factory
 
-import bc.{ByteCodeFactory, ByteCodeParser, ByteCodeParserImpl}
-import vendor.ProgramParser
-import vendor.CommandParser
-import vm.{VirtualMachine, VirtualMachineParser,VirtualMachineImpl}
-
-import scala.collection.immutable.Vector
+import bc.{ByteCodeFactory, ByteCodeFactoryImpl, ByteCodeParser, ByteCodeParserImpl}
+import vendor.{CommandParser, ProgramParser}
+import vm._
 
 /**
   * The `VirtualMachineFactory` follows the *factory pattern*. It provides
@@ -16,21 +13,32 @@ object VirtualMachineFactory {
   /**
     * Get a default implementation of ByteCodeFactory.
     */
-  val byteCodeFactory: ByteCodeFactory = bc.ByteCodeFactoryImpl
+  val byteCodeFactory: ByteCodeFactory = ByteCodeFactoryImpl
 
-  def vendorParser: ProgramParser = new CommandParser()
+  /**
+    * Get a default implementation of ProgramParser
+    */
+    // As CommandParser is immutable, we only need one instance, which we can lazily create.
+  lazy val vendorParser: ProgramParser = new CommandParser
 
   /**
     * Get a default implementation of ByteCodeParser.
-    *
-    * (Implemented as a lazy val so that we only create one ByteCodeParser instance, and delay
-    * creation until, or if, it is required.)
     */
+  // As ByteCodeParserImpl is immutable, we only need one default instance. The instance can be a
+  // lazy val to delay creation until it is required.
   lazy val byteCodeParser: ByteCodeParser = new ByteCodeParserImpl(byteCodeFactory)
 
-  // TODO
-  def virtualMachineParser: VirtualMachineParser = ???
+  /**
+    * Get a default implementation of VirtualMachineParser
+    */
+    // As VirtualMachineParserImp is immutable, we only need one instance, which we can lazily
+    // create.
+  lazy val virtualMachineParser: VirtualMachineParser = new VirtualMachineParserImp
 
-  // TODO
-  def virtualMachine: VirtualMachine = new VirtualMachineImpl(Vector.empty)
+  /**
+    * Get a default implementation of VirtualMachine.
+    */
+  // as VirtualMachineImpl is immutable, we only need one default instance. The instance can be a
+  // lazy val to delay creation until it is required.
+  lazy val virtualMachine: VirtualMachine = new VirtualMachineImpl(Vector.empty)
 }
