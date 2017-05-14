@@ -1,7 +1,6 @@
 package vendor
 
-import scala.io.Source
-import scala.io.Source._
+import scala.io.Source.fromFile
 
 class CommandParser extends ProgramParser {
   /**
@@ -12,14 +11,8 @@ class CommandParser extends ProgramParser {
     * @return an instruction list
     */
 
-  def parse(file: String): InstructionList = {
-    fromFile(file).getLines().map(line => {
-      val tokens = line.split(" ")
-      val name = tokens.head
-      val args = tokens.tail.filter(_.length > 0).map(x => x.toInt).toSeq.toVector
-      new Instruction(name, args)
-    }).toVector
-  }
+  def parse(file: String): InstructionList =
+    fromFile(file).getLines().map(parseLine).toVector
 
   /**
     * Parses a string representation of a bytecode program
@@ -28,12 +21,16 @@ class CommandParser extends ProgramParser {
     * @param string the string to parse
     * @return an instruction list
     */
-  def parseString(string: String): InstructionList ={
-    string.split ("\n").map(line => {
+  def parseString(string: String): InstructionList =
+    string.split ("\n").map(parseLine).toVector
+
+  /**
+    * Parse a line into a single instruction
+    */
+  def parseLine(line: String): Instruction = {
     val tokens = line.split (" ")
     val name = tokens.head
-    val args: Vector[Int] = tokens.tail.filter (_.length > 0).map (x => x.toInt).toSeq.toVector
+    val args: Vector[Int] = tokens.tail.filter (_.length > 0).map (x => x.toInt).toVector
     new Instruction (name, args)
-  }).toVector
   }
 }
