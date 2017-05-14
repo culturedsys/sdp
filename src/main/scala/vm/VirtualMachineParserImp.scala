@@ -1,7 +1,9 @@
 package vm
 
-import bc.{IAdd, _}
+import bc.{ByteCode, InvalidBytecodeException}
+import factory.VirtualMachineFactory
 import vendor.{CommandParser, Instruction, ProgramParser}
+import vm.VirtualMachineParserImpl.bytecode
 
 class VirtualMachineParserImp extends VirtualMachineParser{
 
@@ -32,25 +34,35 @@ class VirtualMachineParserImp extends VirtualMachineParser{
     * @return a vector of bytecodes
     */
   def parseString(str: String): Vector[ByteCode]={
-    val result:Vector[Instruction]=vendorParser.parseString(str)
+    val result: Vector[Instruction] = vendorParser.parseString(str)
     helper(result)
   }
 
-  private def helper(result:Vector[Instruction])={
-    result.map(x=>{
-      x.name match{
-        case "print" => ByteCodeFactoryImpl.make(new Print().code,x.args:_*)
-        case "iadd"   => ByteCodeFactoryImpl.make(new IAdd().code,x.args:_*)
-        case "idup" => ByteCodeFactoryImpl.make(new IDup().code,x.args:_*)
-        case "iswap"   => ByteCodeFactoryImpl.make(new ISwap().code,x.args:_*)
-        case "iinc" => ByteCodeFactoryImpl.make(new IInc().code,x.args:_*)
-        case "ineg"   => ByteCodeFactoryImpl.make(new INeg().code,x.args:_*)
-        case "irem" => ByteCodeFactoryImpl.make(new IRem().code,x.args:_*)
-        case "idiv"   => ByteCodeFactoryImpl.make(new IDiv().code,x.args:_*)
-        case "imul" => ByteCodeFactoryImpl.make(new IMul().code,x.args:_*)
-        case "isub"   => ByteCodeFactoryImpl.make(new ISub().code,x.args:_*)
-      }
-    })
+  private def helper(instructions: Vector[Instruction])= {
+    VirtualMachineFactory.byteCodeParser.parse(instructions.flatMap(encodeInstruction))
+  }
+
+
+  /**
+    * Convert vendor instruction into a vector of bytes. Checks the validity of the instruction in two ways: checks that
+    * the name of the instruction is the name of an operation with a known code, and checks that the values of the
+    * argument are in range for Byte (the example given in the question suggests that only one byte is allowed as an
+    * argument for iconst). It does not check that the Instruction has the correct number of arguments; that will be
+    * checked by the ByteCodeParser.
+    *
+    * @param instruction the instruction in the vendor format
+    * @return a Vector of Bytes encoding this instruction
+    * @throws InvalidBytecodeException if it cannot encode this instruction as a Byte code
+    */
+  def encodeInstruction(instruction: Instruction): Vector[Byte] = {
+    val opcode = bytecode.getOrElse(instruction.name, throw new InvalidBytecodeException(s"No bytecode for ${instruction.name}"))
+    val args = instruction.args.map { i =>
+      if (i < Byte.MinValue || i > Byte.MaxValue)
+        throw new InvalidBytecodeException(s"Integer value $i out of range for Byte")
+      else
+        i.toByte
+    }
+    opcode +: args
   }
 
 }
