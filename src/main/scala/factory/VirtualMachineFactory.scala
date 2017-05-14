@@ -2,7 +2,10 @@ package factory
 
 import bc.{ByteCodeFactory, ByteCodeParser, ByteCodeParserImpl}
 import vendor.ProgramParser
-import vm.{VirtualMachine, VirtualMachineParser}
+import vendor.CommandParser
+import vm.{VirtualMachine, VirtualMachineParser,VirtualMachineImpl}
+
+import scala.collection.immutable.Vector
 
 /**
   * The `VirtualMachineFactory` follows the *factory pattern*. It provides
@@ -15,8 +18,7 @@ object VirtualMachineFactory {
     */
   val byteCodeFactory: ByteCodeFactory = bc.ByteCodeFactoryImpl
 
-  // TODO
-  def vendorParser: ProgramParser = ???
+  def vendorParser: ProgramParser = new CommandParser()
 
   /**
     * Get a default implementation of ByteCodeParser.
@@ -30,5 +32,5 @@ object VirtualMachineFactory {
   def virtualMachineParser: VirtualMachineParser = ???
 
   // TODO
-  def virtualMachine: VirtualMachine = ???
+  def virtualMachine: VirtualMachine = new VirtualMachineImpl(Vector.empty)
 }
